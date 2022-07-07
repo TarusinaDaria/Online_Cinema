@@ -7,7 +7,7 @@ from .models import Movie
 
 
 def index_page(request):
-    movies = Movie.objects.all()
+    movies = Movie.objects.all().order_by('kinopoisk_id')
     return render(request, 'movies/index.html', {'movies' : movies})
 
 
@@ -16,12 +16,12 @@ def player_page(request, kinopoisk_id):
 
 
 def films_page(request):
-    movies = Movie.objects.all()
+    movies = Movie.objects.all().order_by('kinopoisk_id')
     return render(request, 'movies/films.html', {'movies' : movies})
 
 
 def series_page(request):
-    movies = Movie.objects.all()
+    movies = Movie.objects.all().order_by('kinopoisk_id')
     return render(request, 'movies/series.html', {'movies' : movies})
 
 
