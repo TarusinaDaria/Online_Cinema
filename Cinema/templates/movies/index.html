@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block 1 %} Наши фильмы {% endblock %}
+{% block 2 %} Наши фильмы {% endblock %}
+
+{% block main %}
+
+{% for movie in movies %}
+<h3>{{ movie.name }}</h3>
+<!--<div class="text2cols">
+<div class="text2cols-row">
+    <div class="text2cols-item">
+    -->
+<div style = "float: left; width 30%;">
+<img src="media/{{movie.image}}">
+</div>
+<div style = "float: margin-left; margin: 0px 40px 0px 0px  width 40%;", align="justify">
+<p>      Описание: {{ movie.description }} </p>
+</div>
+<div style="clear: both"> </div>
+
+<a href="movie/{{movie.kinopoisk_id}}">Перейти к просмотру фильма</a>
+<hr>
+{% endfor %}
+
+
+{% endblock %}
