@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Сериалы
+{% endblock %}
+
+{% block content %}
+{% for movie in movies %}
+{% if movie.soap_opera %}
+<h3>{{ movie.name }}</h3>
+<img src="media/{{movie.image}}">
+<p>{{ movie.description  }}</p>
+<a href="movie/{{movie.kinopoisk_id}}">Подробнее</a>>
+<hr>
+
+
+<!-- jQuery -->
+<script src="/examples/vendors/jquery/jquery-3.2.1.min.js"></script>
+<!-- Bootstrap -->
+<script src="/examples/vendors/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+{% endif %}
+{% endfor %}
+
+    <h1>Сериалы </h1>
+    <p>Просто текст</p>
+{% endblock %}
