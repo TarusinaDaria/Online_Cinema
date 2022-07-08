@@ -10,6 +10,10 @@
 	<!-- Bootstrap core CSS -->
     <link href="/docs/5.2/dist/css/bootstrap.min.css?v=52" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
     <title>{% block title %}{% endblock %}</title>
 
 	<!-- Favicons -->
@@ -26,6 +30,7 @@
 
 
 <style>
+
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -39,6 +44,31 @@
           font-size: 3.5rem;
         }
       }
+.gradient-text {
+  font-family: 'Rubik One', sans-serif;
+  font-size: 30px;
+  text-transform: uppercase;
+  background: linear-gradient(45deg, #c67f16 33%, #ecce80 66%, #c67f16);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #c67f16;
+  display: table;
+  margin: 20px auto;
+}
+
+      .gradient-all {
+      font-size: 1em;
+      background: linear-gradient(135deg, #c67f16 20%, #ecce80 70%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+      padding: 0.3em 0.6em ;
+      border: 3px solid transparent;
+      border-image: linear-gradient(135deg, #c67f16 20%, #ecce80 70%);
+      border-image-slice: 1;
+      }
+
+
     </style>
 
 
@@ -57,8 +87,8 @@
   <header class="mb-auto">
     <div class="container-fluid d-flex align-items-center">
        <h1 class="d-flex align-items-center fs-4 text-warning mb-0">
-      <img src="https://sun9-60.userapi.com/impf/hiWcBvmL39Impuoapcf4Yi0QPX0jwafUs9TgUg/rqX_UNeTKC4.jpg?size=157x115&quality=95&sign=3e31429c132e31924a9b20edcf6caac6&type=album" width="38" height="30" class="me-3" alt="Bootstrap">
-      Movie Time
+      <img src="https://sun9-60.userapi.com/impf/hiWcBvmL39Impuoapcf4Yi0QPX0jwafUs9TgUg/rqX_UNeTKC4.jpg?size=157x115&quality=95&sign=3e31429c132e31924a9b20edcf6caac6&type=album" width="38" height="30" class=" me-3" alt="Bootstrap">
+      <p class="gradient-text">Movie Time</p>
     </h1>
 
     <!--<a href="/docs/5.2/examples/cheatsheet-rtl/" class="ms-auto link-light" hreflang="ar">RTL cheatsheet</a>-->
@@ -66,14 +96,15 @@
       <!--<nav class="nav nav-masthead justify-content-center float-md-end">
         <a class="me-3 py-2 text-white text-decoration-none" aria-current="page" href="{% url 'home'%}">Главная</a>
         <a class="me-3 py-2 text-white text-decoration-none" href="{% url 'films'%}">Фильмы</a>
-        <a class="me-3 py-2 text-white text-decoration-none" href="{% url 'series'%}">Сериалы</a>
+        <a class="me-3 py-2 text-white text-decoration-none" href="{% url 'cartoons'%}">Сериалы</a>
         <a class="me-3 py-2 text-white text-decoration-none" href="{% url 'admin'%}">Вход</a>
       </nav>-->
 
         <a class="ms-auto link-light text-decoration-none" hreflang="ar" href="{% url 'home'%}">Главная</a>
         <a class="ms-auto link-light text-decoration-none" hreflang="ar" href="{% url 'films'%}">Фильмы</a>
         <a class="ms-auto link-light text-decoration-none" hreflang="ar" href="{% url 'series'%}">Сериалы</a>
-        <a class="btn btn-sm btn-outline-secondary ms-auto link-light text-decoration-none text-warning"  href="{% url 'admin'%}">Зарегистрироваться</a>
+        <a class="ms-auto link-light text-decoration-none" hreflang="ar" href="{% url 'cartoons'%}">Мультфильмы</a>
+        <a class="gradient-all ms-auto link-light text-decoration-none text-warning"  href="{% url 'admin'%}">Зарегистрироваться</a>
 
 
 
