@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block 1 %} Просмотр фильма {% endblock %}
+{% block 2 %} Просмотр фильма <h3> "{{names}}" </h3> {% endblock %}
+
+{% block main %}
+<div id="kinoplayertop" data-player="bazon" data-kinopoisk="{{ kinopoisk_id }}}"></div>
+<script src="//kinoplayer.top/top.js"></script>
+
+{% endblock %}`
