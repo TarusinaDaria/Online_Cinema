@@ -2,6 +2,10 @@
 
 {% block content %}
 
+<p> About </p>
+
+<h1>{{movie.name}}</h1>
+
 {% if movie_shots %}
 
  <style>
@@ -138,14 +142,10 @@ function showSlides()
 }
 </script>
 
-{% endif %}
 
-
-
-<p> About </p>
-
-<h1>{{movie.name}}</h1>
+{% else %}
 <img src="media/{{movie.image}}">
+{% endif %}
 
 <h1></h1>
 
