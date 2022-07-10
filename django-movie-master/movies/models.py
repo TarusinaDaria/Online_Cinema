@@ -2,6 +2,24 @@ from django.db import models
 from django.urls import reverse
 
 
+class Actor(models.Model):
+    """Актеры и режиссеры"""
+    name = models.CharField("Имя", max_length=100)
+    age = models.PositiveSmallIntegerField("Возраст", default=0)
+    description = models.TextField("Описание")
+    image = models.ImageField("Изображение", upload_to='actors')
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('actor_detail', kwargs={"slug": self.name})
+
+    class Meta:
+        verbose_name = "Актеры и режиссеры"
+        verbose_name_plural = "Актеры и режиссеры"
+
+
 class Movie(models.Model):
     name = models.CharField("Название фильма", max_length=100)
     description = models.TextField("Описание", max_length=5000)
@@ -23,9 +41,8 @@ class Movie(models.Model):
     science_fiction = models.BooleanField("Жанр - фантастика", default=False)
     anime = models.BooleanField("Жанр - аниме", default=False)
     magnet_link = models.TextField("Введите магнет ссылку", default=False)
-    #убрать
     year = models.IntegerField("Введите год премьеры", null=False)
-#   draft = models.BooleanField("Черновик", default=False)
+    actors = models.ManyToManyField(Actor, verbose_name="актеры", related_name="film_actor")
 
     class Meta:
         verbose_name = 'фильм'
@@ -34,9 +51,6 @@ class Movie(models.Model):
     def __str__(self):
         return self.name
 
-
-#    def get_absolute_id(self):
-#        return reverse("movie_detail", kwargs={"slug": self.kinopoisk_id})
 
 
 class RatingStar(models.Model):
@@ -57,6 +71,7 @@ class Rating(models.Model):
     ip = models.CharField("IP адрес", max_length=15)
     star = models.ForeignKey(RatingStar, on_delete=models.CASCADE, verbose_name="звезда")
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, verbose_name="фильм", related_name="ratings")
+
 
     def __str__(self):
         return f"{self.star} - {self.movie}"

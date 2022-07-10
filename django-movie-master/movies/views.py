@@ -9,7 +9,7 @@ from .forms import RatingForm, Rating   # , ReviewForm,
 
 
 from django.http import HttpResponse
-from .models import Movie, MovieShots
+from .models import Movie, MovieShots, Actor
 
 
 def index_page(request):
@@ -30,7 +30,16 @@ def about_page(request, name):
     except ObjectDoesNotExist:
         return HttpResponse("Фильм не найден")
     movie_shots = MovieShots.objects.filter(title=name)
+    # убрать потом
+    # movie_stars = Rating.objects.all()  # filter(movie__exact=name)
+#    list = ['films_comedy', 'films_drama', 'films_horror', 'films_romance']
+ #   shots = Movie.objects.get(list=True)
+#    print("Shots: ", shots)
     return render(request, 'movies/about.html', {'movie': movie, 'movie_shots': movie_shots})
+
+
+#def actors_page(request):
+#    actors = Actor.objects.
 
 
 def films_page(request):
@@ -109,6 +118,14 @@ def admin(request):
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
+
+
+class ActorView(DetailView):
+    """Вывод информации о актере"""
+    model = Actor
+    template_name = 'movies/about_actor.html'
+    slug_field = "name"
+
 
 
 """    Измениния   """

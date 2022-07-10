@@ -5,7 +5,9 @@
 <p> About </p>
 
 <h1>{{movie.name}}</h1>
-
+<div class="left-ads-display col-lg-8">
+        <div class="row">
+           <div class="desc1-left col-md-6">
 {% if movie_shots %}
 
  <style>
@@ -16,8 +18,8 @@ img {vertical-align: middle;}
 
 /* Slideshow container */
 .slideshow-container {
-  max-width: 500px;
-  max-height: 1000px;
+  max-width: 2000px;
+  max-height: 2000px;
   position: relative;
   margin: auto;
 }
@@ -144,19 +146,14 @@ function showSlides()
 
 
 {% else %}
-<img src="media/{{movie.image}}">
+<img src="media/{{movie.image}}" class="img-fluid" alt="">
 {% endif %}
 
-<h1></h1>
-
-<div class="left-ads-display col-lg-8">
-        <div class="row">
-            <div class="desc1-left col-md-6">
-                <img src="{{ movie.poster.url }}" class="img-fluid" alt="">
             </div>
+
             <div class="desc1-right col-md-6 pl-lg-4">
                 <h3 class="editContent">
-                    {{ movie.title }}
+                    {{ movie.name }}
                 </h3>
                 <h5 class="editContent"></h5>
                 <ul>
@@ -174,6 +171,11 @@ function showSlides()
                         </span>
                     </li>
                     <li style="list-style: none"><span><b>Актеры:</b>
+                        {% for actor in movie.actors.all %}
+                            <a href="{{actor.get_absolute_url}}">
+                                    {{ actor.name }}
+                            </a>
+                        {% endfor %}
 
                                 </span>
                     </li>
@@ -195,7 +197,8 @@ function showSlides()
                         <form action="{% url 'add_rating' %}" method="post" name="rating">
                             <b>Рейтинг:</b>
                             {% csrf_token %}
-                            <input type="hidden" value="{{ movie.id }}" name="movie">
+
+                            <input type="hidden" value="{{ movie.ip }}" name="movie">
                             <span class="rating">
                                 {% for k, v in star_form.fields.star.choices %}
                                     <input id="rating{{ v }}" type="radio" name="star"
@@ -203,6 +206,10 @@ function showSlides()
                                     <label for="rating{{ v }}">{{ k }}</label>
                                 {% endfor %}
                             </span>
+
+
+
+
                             <span class="editContent">4.0</span>
                         </form>
                     </li>

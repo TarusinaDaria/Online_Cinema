@@ -23,6 +23,7 @@ urlpatterns = [
     path('cartoons', views.cartoons_page, name='cartoons'),
     path('admin', views.admin, name='admin'),
     path("add-rating/", views.AddStarRating.as_view(), name='add_rating'),
-    #path("<slug:slug>/", views.about_page, name="movie_detail"),
+    # path("about_actor <name>", views.ActorView.as_view(), name="actor_detail"),
+    path("actor/<str:slug>/", views.ActorView.as_view(), name="actor_detail"),
 
 ]
