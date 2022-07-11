@@ -145,10 +145,36 @@ font-family: Verdana, sans-serif;
       </nav>-->
 
         <a class="ms-auto link-light text-decoration-none" hreflang="ar" href="{% url 'home'%}"><h6>Главная</h6></a>
-        <a class="ms-auto link-light text-decoration-none" hreflang="ar" href="{% url 'films'%}"><h6>Фильмы</h6></a>
+
+        {% for category in category_list %}
+        {% endfor %}
+        <a class="ms-auto link-light text-decoration-none" hreflang="ar" href="{% url 'films' %}"><h6>Фильмы</h6></a>
+
         <a class="ms-auto link-light text-decoration-none" hreflang="ar" href="{% url 'series'%}"><h6>Сериалы</h6></a>
         <a class="ms-auto link-light text-decoration-none" hreflang="ar" href="{% url 'cartoons'%}"><h6>Мультфильмы</h6></a>
+<!---- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-->
+
+
+       {% load movie_tag %}
+<div class="search-bar w3layouts-newsletter">
+    <h6>
+    <h3 class="sear-head editContent">Поиск фильма</h3>
+    <form action="{% url 'search' %}" method="get" class="d-flex editContent">
+        <input type="search" placeholder="Введите название..." name="q" class="form-control" required="">
+        <button type="submit" class="btn1 btn">
+            <span class="fa fa-search" aria-hidden="true"></span>
+        </button>
+    </form>
+
+
+    </h6>
+</div>
+
+
+
         <a class="gradient-all ms-auto link-light text-decoration-none text-warning"  href="{% url 'admin'%}"><h6>Зарегистрироваться</h6></a>
+
+
 
     </div>
   </header>

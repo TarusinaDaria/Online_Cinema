@@ -16,10 +16,18 @@
 
   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
       <div class="d-flex text-center text-white bg-black">
+
+                  {% for genre in genres %}
+                            <a class="dropdown-item gradient-text bg-black" href="films_{{genre.name}}">{{genre.name}}</a>
+                {% endfor %}
+
+     <!--
     <a class="dropdown-item  dropdown-dark gradient-text bg-black" href="films_comedy">Комедии</a>
     <a class="dropdown-item gradient-text bg-black" href="films_drama">Драмы</a>
     <a class="dropdown-item gradient-text bg-black" href="films_horror">Ужасы</a>
     <a class="dropdown-item gradient-text bg-black" href="films_romance">Милодрамы</a>
+
+          -->
    </div>
   </div>
 </div>

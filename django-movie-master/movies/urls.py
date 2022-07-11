@@ -25,5 +25,8 @@ urlpatterns = [
     path("add-rating/", views.AddStarRating.as_view(), name='add_rating'),
     # path("about_actor <name>", views.ActorView.as_view(), name="actor_detail"),
     path("actor/<str:slug>/", views.ActorView.as_view(), name="actor_detail"),
+    path("director/<str:slug>/", views.DirectorView.as_view(), name="director_detail"),
+
+    path("search", views.Search.as_view(), name='search'),
 
 ]

@@ -5,15 +5,19 @@ from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
 
 from django.views.generic.base import View
-from .forms import RatingForm, Rating   # , ReviewForm,
+from .forms import RatingForm, Rating
 
 
 from django.http import HttpResponse
-from .models import Movie, MovieShots, Actor
+from .models import Movie, MovieShots, Actor, Director, Category, Genre
+
+
+def category(request):
+    return {"category_list": Category.objects.all()}
 
 
 def index_page(request):
-    movies = Movie.objects.all()
+    movies = Movie.objects.all().order_by('-year')
     # movie_stars = Rating.objects.all().order_by('ip')
     return render(request, 'movies/index.html', {'movies': movies})  # 'movie_stars' : movie_stars})
 
@@ -38,22 +42,46 @@ def about_page(request, name):
     return render(request, 'movies/about.html', {'movie': movie, 'movie_shots': movie_shots})
 
 
-#def actors_page(request):
-#    actors = Actor.objects.
+#def get(slug):
 
+ #   return genres
 
 def films_page(request):
-    movies = Movie.objects.filter(films=True).order_by('year')
-    return render(request, 'movies/films.html', {'movies': movies})
+    movies = Movie.objects.filter(films=True).order_by('-year')
+
+    genres = Genre.objects.all()   # selected_related().filter(categories=cat)
+    # filter(title__icontains=self.request.GET.get("q"))
+
+
+        # all()  # filter(categories='films')  # filter(categories='films')
+    return render(request, 'movies/films.html', {'movies': movies, 'genres': genres})
+
+
+class Search(ListView):
+    """Поиск фильмов"""
+    paginate_by = 3  # выводим 3 фильма
+
+    def get_queryset(self):
+        return Movie.objects.filter(title__icontains=self.request.GET.get("q"))
+
+    """
+    __icontains - для того чтобы не учитывался регистр
+    self.request.GET.get("q") - значение которое ввел пользователь (имя фильма)
+    """
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["q"] = f'q={self.request.GET.get("q")}&'   # добавляем в наш словарь
+        return context
 
 
 def films_comedy_page(request):
-    movies = Movie.objects.filter(films_comedy=True).order_by('year')
+    movies = Movie.objects.filter(films_comedy=True).order_by('-year')
     return render(request, 'movies/films_comedy.html', {'movies': movies})
 
 
 def films_drama_page(request):
-    movies = Movie.objects.filter(films_drama=True).order_by('year')
+    movies = Movie.objects.filter(films_drama=True).order_by('-year')
     return render(request, 'movies/films_drama.html', {'movies': movies})
 
 
@@ -69,7 +97,8 @@ def films_romance_page(request):
 
 def series_page(request):
     movies = Movie.objects.filter(series=True)
-    return render(request, 'movies/series.html', {'movies': movies})
+    genres = Genre.objects.all()
+    return render(request, 'movies/series.html', {'movies': movies, 'genres': genres})
 
 
 def series_comedy_page(request):
@@ -94,7 +123,8 @@ def series_romance_page(request):
 
 def cartoons_page(request):
     movies = Movie.objects.filter(cartoons=True).order_by('year')
-    return render(request, 'movies/cartoons.html', {'movies': movies})
+    genres = Genre.objects.all()
+    return render(request, 'movies/cartoons.html', {'movies': movies, 'genres': genres})
 
 
 def cartoons_science_fiction_page(request):
@@ -124,6 +154,18 @@ class ActorView(DetailView):
     """Вывод информации о актере"""
     model = Actor
     template_name = 'movies/about_actor.html'
+    slug_field = "name"
+
+
+class DirectorView(DetailView):
+    model = Director
+    template_name = 'movies/about_director.html'
+    slug_field = "name"
+
+
+class CategoryView(DetailView):
+    model = Category
+    template_name = 'movies/<str:slug>/.html'
     slug_field = "name"
 
 

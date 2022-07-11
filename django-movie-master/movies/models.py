@@ -3,7 +3,7 @@ from django.urls import reverse
 
 
 class Actor(models.Model):
-    """Актеры и режиссеры"""
+    """Актеры"""
     name = models.CharField("Имя", max_length=100)
     age = models.PositiveSmallIntegerField("Возраст", default=0)
     description = models.TextField("Описание")
@@ -16,14 +16,66 @@ class Actor(models.Model):
         return reverse('actor_detail', kwargs={"slug": self.name})
 
     class Meta:
-        verbose_name = "Актеры и режиссеры"
-        verbose_name_plural = "Актеры и режиссеры"
+        verbose_name = "Актеры"
+        verbose_name_plural = "Актеры"
+
+
+class Director(models.Model):
+    """режиссеры"""
+    name = models.CharField("Имя", max_length=100)
+    age = models.PositiveSmallIntegerField("Возраст", default=0)
+    description = models.TextField("Описание")
+    image = models.ImageField("Изображение", upload_to='actors')
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('director_detail', kwargs={"slug": self.name})
+
+    class Meta:
+        verbose_name = "Режиссеры"
+        verbose_name_plural = "Режиссеры"
+
+
+class Category(models.Model):
+    """Категории"""
+    name = models.CharField("Категория", max_length=150)
+    # description = models.TextField("Описание")
+    # url = models.SlugField(max_length=160, unique=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('category', kwargs={"slug": self.name})
+
+    class Meta:
+        verbose_name = "Категория"
+        verbose_name_plural = "Категории"
+
+
+class Genre(models.Model):
+    """Жанры"""
+    categories = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name="категория")
+    name = models.CharField("Название жанра", max_length=100)
+
+    def __str__(self):
+        return f"{self.categories} - {self.name}"
+
+    class Meta:
+        verbose_name = "Жанр"
+        verbose_name_plural = "Жанры"
 
 
 class Movie(models.Model):
     name = models.CharField("Название фильма", max_length=100)
     description = models.TextField("Описание", max_length=5000)
     image = models.ImageField("Изображение", upload_to='movie')
+
+    category = models.ManyToManyField(Actor, verbose_name="Категория фильма", related_name="category")
+        # = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name="категории")
+
     films = models.BooleanField("Фильм", default=False, help_text="Выберите жанр фильма, который добавляете на сайт")
     films_comedy = models.BooleanField("Жанр - комедия", default=False)
     films_drama = models.BooleanField("Жанр - драма", default=False)
@@ -43,6 +95,7 @@ class Movie(models.Model):
     magnet_link = models.TextField("Введите магнет ссылку", default=False)
     year = models.IntegerField("Введите год премьеры", null=False)
     actors = models.ManyToManyField(Actor, verbose_name="актеры", related_name="film_actor")
+    director = models.ManyToManyField(Director, verbose_name="режисеры", related_name="film_director")
 
     class Meta:
         verbose_name = 'фильм'
@@ -50,7 +103,6 @@ class Movie(models.Model):
 
     def __str__(self):
         return self.name
-
 
 
 class RatingStar(models.Model):
@@ -71,7 +123,6 @@ class Rating(models.Model):
     ip = models.CharField("IP адрес", max_length=15)
     star = models.ForeignKey(RatingStar, on_delete=models.CASCADE, verbose_name="звезда")
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, verbose_name="фильм", related_name="ratings")
-
 
     def __str__(self):
         return f"{self.star} - {self.movie}"
